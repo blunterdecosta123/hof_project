@@ -1,0 +1,155 @@
+button{
+    margin-top: 1.5em;
+}
+.elevate {
+    
+    box-shadow: 0 0 4px rgba(126, 125, 125, 0.945); /* Initial box shadow */
+    padding: 20px;
+    margin-top: 20px;
+    border-color: transparent;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Add transition for smooth effect */
+}
+.elevate-text {
+    transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
+}
+
+.elevate-text:hover {
+    transform: scale(1.03);
+ 
+}
+.textBox h1{
+    font-size: 3.4em;
+}
+
+.textBox h1 span{
+    color: #00bfff;
+}
+
+.textBox p{
+    font-size: 1.2em;
+}
+
+.textBox .homeBtn{
+    font-family: 'Poppins';
+    padding: 8px 18px;
+    margin: 16px 12px;
+    font-size: 26px;
+    background-color: transparent;
+    color: var(--i);
+    outline: none;
+    border: 3px solid var(--i);
+    border-radius: 4px;
+    cursor: pointer;
+    pointer-events: all;
+    transition: .3s;
+    font-weight: 600;
+}
+
+.textBox .homeBtn:hover{
+    background-color: var(--i);
+    color: #000;
+}
+
+.image{
+    display:grid;
+    align-items:center;
+    column-gap:5px;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 50px;
+    height: 50%;
+    width: 50%;
+    display: flex;
+}
+
+.bgAnimation{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(20,1fr);
+    grid-template-rows: repeat(20,1fr);
+    background: #1d1d1d;
+    filter: saturate(2);
+    overflow: hidden;
+}
+
+.colorBox{
+    z-index: 2;
+    filter: brightness(1.1);
+    transition: 2s ease;
+    position: relative;
+    margin: 2px;
+    background: #1d1d1d;
+}
+
+.colorBox:hover{
+    background: #00bfff;
+    transition-duration: 0s;
+}
+
+.backgroundAmim{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #00bfff;
+    filter: blur(60px);
+    animation: animBack 6s linear infinite;
+}
+
+@keyframes animBack {
+    0%{
+        top: -60px;
+    }
+    100%{
+        top: 120%;
+    }
+}
+
+.elevate:hover {
+    box-shadow: 0 0 8px rgba(156, 155, 155, 0.945); /* Change box shadow on hover */
+    transform: translate3d(4px, 4px, 4px); /* Elevate the div on hover */
+    
+}
+/* Dark green color for hover effect */
+.navbar-nav .nav-link:hover {
+    color: #228B22 !important; /* Change text color */
+    background-color: transparent; /* Optional: Keep background transparent */
+}
+
+/* Optional: Change text color for active link */
+.navbar-nav .nav-link.active {
+    color: #228B22 !important;
+}
+
+
+
+
+
+
+.fullscreen-bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+}
+.fullscreen-bg-video video{
+    min-height: 700px;
+    min-width: 100%;
+    width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.white-heading {
+    color: white;
+}

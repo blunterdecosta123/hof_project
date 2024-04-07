@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Garbage Management</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Style for the mouse trail */
+        .mouse-trail {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .trail {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+    <script src="assets/js/jquery-3.4.1.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#scanner-btn').on('click', function () {
+
+                $('html, body').animate({
+                    scrollTop: $('#about').offset().top
+                }, 'slow');
+            });
+
+            // Mouse trail functionality
+            $(document).mousemove(function (event) {
+                var mouseX = event.pageX;
+                var mouseY = event.pageY;
+                var trail = $('<div class="trail"></div>').css({
+                    top: mouseY + 'px',
+                    left: mouseX + 'px'
+                });
+                $('body').append(trail);
+
+                // Remove trail after a short delay
+                setTimeout(function () {
+                    trail.remove();
+                }, 200);
+            });
+        });
+    </script>
+</head>
+
+<body id="page-top">
+
+
+    <div class="fullscreen-bg-video d-none d-sm-block">
+        <video loop autoplay muted>
+            <source type="video/mp4" src="assets/video/background_video.mp4">
+        </video>
+    </div>
+
+    <nav class="navbar navbar-light navbar-expand-md navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <div class="image"><img src="assets/images/garbage_management__1_-removebg-preview.png" height="80em" alt="Logo" class="logo"> </div>
+            <a class="nav-link active js-scroll-trigger elevate-text" href="#" style="margin-left: 20px;">
+                Home
+            </a>
+            <button data-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+                    value="Menu"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item nav-link js-scroll-trigger" role="presentation"><a id="scanner-btn" class="nav-link  js-scroll-trigger" href="#">Scanner</a></li>
+                    <li class="nav-item nav-link js-scroll-trigger" role="presentation"><a class="nav-link js-scroll-trigger elevate-text" href="#download">Our Mission</a></li>
+                    <li class="nav-item nav-link js-scroll-trigger" role="presentation"><a class="nav-link js-scroll-trigger elevate-text" href="#contact">How To Use</a></li>
+          
+
+
+
+                </ul>
+            </div>
+        </div>
+        
+        </div>
+    </nav>
+    
+    <header class="masthead">
+
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="hi"><h1 class="brand-heading" style="font-size: 23px;"><br>Garbage Detection System<br><br></h1></div>
+                        <p class="intro-text"><b>Welcome to GMS: </b>Your Sustainable Waste Management Partner<br><br>
+                     
+
+             
+                            At GMS, we are committed to revolutionizing waste management practices for a cleaner, greener future. Our mission is to reduce environmental impact through innovative solutions and responsible waste handling.
+                            
+                            </p><a class="btn btn-link btn-circle" role="button" href="#about"><i class="fa fa-angle-double-down animated"></i></a></div>
+                </div>
+            </div>
+        </div>
+
+
+
+        
+    </header>
+
+      
+
+    <section id="about" class="content-section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Scanner</h2>
+                    <div class="videoContainer mx-auto">
+                        <video class="border border-success col-lg-10 mx-auto" autoplay="true" id="videoElement"></video>
+                        <canvas id="frameCanvas" style="display: none;"></canvas> 
+                        <button onclick="captureFrameAndToggleCamera()" id="captureBtn">Capture Frame</button>
+                        <a id="downloadBtn" style="display: none;">Download Captured Image</a>
+                    </div>
+                    <script>
+                        let video = document.querySelector("#videoElement");
+                        let frameCanvas = document.querySelector("#frameCanvas");
+                        let captureBtn = document.querySelector("#captureBtn");
+                        let downloadBtn = document.querySelector("#downloadBtn");
+                        let isCameraOpen = true;
+                        function invertCamera() {
+                            video.style.transform = "scaleX(-1)";
+                        }
+                
+                        // Function to capture a frame and toggle camera state
+                        invertCamera();
+                        function captureFrameAndToggleCamera() {
+                            if (isCameraOpen) {
+                                // Capture the frame
+                                let frameDataUrl = captureFrame();
+                                
+                
+                                // Show download button
+                                downloadBtn.href = frameDataUrl;
+                                downloadBtn.download = "captured_frame.png";
+                                downloadBtn.style.display = "inline";
+
+                                function closeCamera() {
+                                    // Stop the video stream
+                                    let stream = video.srcObject;
+                                    let tracks = stream.getTracks();
+                                    tracks.forEach(track => track.stop());
+
+                        
+                                    // Hide the video
+                                    video.style.display = "none";
+                                }
+                                closeCamera();
+                
+                                // Hide the video
+                                video.style.display = "none";
+                                isCameraOpen = false;
+                
+                                // Change button text and behavior
+                                captureBtn.textContent = "Retake Frame";
+                                captureBtn.onclick = retakeFrameAndToggleCamera;
+                            }
+                        }
+                
+                        // Function to capture a frame from the video
+                        function captureFrame() {
+                            // Set canvas dimensions to match video dimensions
+                            frameCanvas.width = video.videoWidth;
+                            frameCanvas.height = video.videoHeight;
+                
+                            // Draw the current frame from the video onto the canvas
+                            let context = frameCanvas.getContext('2d');
+                            context.drawImage(video, 0, 0, frameCanvas.width, frameCanvas.height);
+                
+                            // Return the data URL of the captured frame
+                            return frameCanvas.toDataURL();
+                        }
+                
+                        // Function to retake frame and toggle camera state
+                        function retakeFrameAndToggleCamera() {
+                            
+                    
+                            // Start the camera when the page loads
+                            navigator.mediaDevices.getUserMedia({ video: true })
+                                .then(function (stream) {
+                                    video.srcObject = stream;
+                                })
+                                .catch(function (error) {
+                                    console.log("Something went wrong!");
+                                });
+                            // Show the video
+                            video.style.display = "block";
+                            isCameraOpen = true;
+                
+                            // Hide download button
+                            downloadBtn.style.display = "none";
+                
+                            // Change button text and behavior
+                            captureBtn.textContent = "Capture Frame";
+                            captureBtn.onclick = captureFrameAndToggleCamera;
+                        }
+                
+                        // Function to invert the video horizontally
+                        
+                        // Start the camera when the page loads
+                        navigator.mediaDevices.getUserMedia({ video: true })
+                        .then(function (stream) {
+                            function invertCamera() {
+                                video.style.transform = "scaleX(-1)";
+                            }
+                                video.srcObject = stream;
+                            })
+                            .catch(function (error) {
+                                console.log("Something went wrong!");
+                            });
+                            fetch('https://api-inference.huggingface.co/models/yangy50/garbage-classification')
+                            .then((response) => {
+                                return response.json()
+                            })
+                            .then((data) => {
+                                console.log(data);
+                            })
+                            .catch((error) => console.log(error));
+                    </script>
+
+                </div>
+                
+                
+                
+                
+
+            </div>
+        </div>
+    </section>
+    <section id="download" class="download-section content-section text-center" style="background-image:url('assets/img/downloads-bg.jpg');">
+        <div class="container">
+
+            <div class="col-lg-8 mx-auto elevate ">
+
+                <h1>Our Mission</h1>
+                <p>We aim to revolutionize waste management in India by providing innovative and sustainable solutions to effectively manage and reduce municipal solid waste. We are committed to creating cleaner, healthier, and more sustainable urban environments by leveraging technology, community engagement, and environmental stewardship. Through our comprehensive waste management services, we aim to minimize landfilling, maximize recycling and resource recovery, and mitigate environmental pollution. Our goal is to empower municipalities, businesses, and communities to adopt eco-friendly practices, reduce waste generation, and contribute to a circular economy. Together, we strive to build a greener and more resilient future for generations to come.</p>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="content-section">
+        <div class="container">
+            <div class="row elevate">
+                <div class="col-md-6 mx-auto">
+                    <div class="image">
+                        <img src="https://tracextech.com/wp-content/uploads/2023/10/traceability-in-waste-management.jpeg" class="img-fluid" alt="Image">
+                    </div>
+                </div>
+                <div class="col-lg-6 mx-auto">
+                    <div class="text-center">
+                        <h2>How To Use</h2>
+                        <ol style="padding-left: 0; margin-top: 20px;">
+                            <li style="margin-bottom: 1.2em;">Click on Scanner button in navbar section.</li>
+                            <li style="margin-bottom: 1.2em;">Bring the object in front of the camera.</li>
+                            <li style="margin-bottom: 1.2em;">Click on the capture button.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <footer>
+        <div class="container text-center">
+
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    
+    <script src="assets/js/grayscale.js"></script>
+
+
+
+</body>
+
+</html>
